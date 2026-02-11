@@ -1,0 +1,50 @@
+{% extends "frontend/layout.html" %}
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-header bg-danger text-white text-center">
+          <h3>บิลรายการอาหาร</h3>
+        </div>
+        <div class="card-body">
+          {% if bill %}
+          <div class="mb-3">
+            <strong>เลขโต๊ะ:</strong> {{ bill.table_no }}<br>
+            <strong>เวลา:</strong> {{ bill.bill_time }}
+          </div>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>ชื่อเมนู</th>
+                <th>จำนวน</th>
+                <th>ราคา/หน่วย</th>
+                <th>ราคารวม</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in items %}
+              <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.price * item.quantity }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <div class="text-end">
+            <h4 class="text-danger">ยอดเงินที่ต้องชำระ: {{ bill.total }} บาท</h4>
+          </div>
+          {% else %}
+          <div class="alert alert-danger">ไม่พบข้อมูลบิล</div>
+          {% endif %}
+          <div class="text-center mt-4">
+            <a href="/menu" class="btn btn-danger">กลับไปหน้าเมนู</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

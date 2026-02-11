@@ -1,0 +1,28 @@
+{% extends "admin/layout_admin.html" %}
+{% block content %}
+<h1>Add New Menu</h1>
+<form method="POST" enctype="multipart/form-data">
+  <div class="mb-3">
+    <label for="name" class="form-label">Menu Name</label>
+    <input type="text" class="form-control" id="name" name="name" required>
+  </div>
+  <div class="mb-3">
+    <label for="price" class="form-label">Price</label>
+    <input type="number" class="form-control" id="price" name="price" required>
+  </div>
+  <div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+  </div>
+  <div class="mb-3">
+    <label for="image" class="form-label">Image</label>
+    <input type="file" class="form-control" id="image" name="image" accept="image/*">
+  </div>
+  <div class="mb-3">
+  <label for="category" class="form-label">Category</label>
+  <input type="text" class="form-control" id="category" name="category">
+  </div>
+  <button type="submit" class="btn btn-success">Add Menu</button>
+  <a href="{{ url_for('admin_menus') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}
