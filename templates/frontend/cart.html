@@ -1,0 +1,67 @@
+{% extends "frontend/layout.html" %}
+{% block content %}
+<h2 class="mb-4">ตะกร้าสั่งอาหาร</h2>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+{% if cart and cart|length > 0 %}
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>ชื่อเมนู</th>
+      <th>ราคา/หน่วย</th>
+      <th>จำนวน</th>
+      <th>ราคารวม</th>
+      <th>จัดการ</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in cart %}
+    <tr>
+      <td>{{ item.name }}</td>
+      <td>{{ item.price }}</td>
+      <td>
+        <form method="POST" action="/cart/update/{{ item.id }}" class="d-inline">
+          <button name="action" value="decrease" class="btn btn-sm btn-outline-secondary">-</button>
+          <span class="mx-2">{{ item.quantity }}</span>
+          <button name="action" value="increase" class="btn btn-sm btn-outline-secondary">+</button>
+        </form>
+      </td>
+      <td>{{ item.price * item.quantity }}</td>
+      <td>
+        <form method="POST" action="/cart/remove/{{ item.id }}" class="d-inline">
+          <button class="btn btn-sm btn-danger">ลบ</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<div class="text-end mb-3">
+  <h4>ยอดรวม: {{ cart | sum(attribute='total') }} บาท</h4>
+</div>
+<div class="text-end">
+  <form method="POST" action="/cart/confirm">
+    <div class="mb-3 text-start">
+      <label for="table_no" class="form-label">เลขโต๊ะ</label>
+      <select class="form-select w-25 d-inline" id="table_no" name="table_no" required>
+        <option value="" disabled selected>เลือกเลขโต๊ะ</option>
+        {% for i in range(1, 11) %}
+          <option value="{{ i }}">{{ i }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button class="btn btn-success btn-lg">ยืนยันการสั่งอาหาร</button>
+  </form>
+</div>
+{% else %}
+<div class="alert alert-info">ยังไม่มีรายการอาหารในตะกร้า</div>
+{% endif %}
+{% endblock %}

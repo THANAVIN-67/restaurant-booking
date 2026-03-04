@@ -1,0 +1,68 @@
+{% extends "frontend/layout.html" %}
+
+{% block content %}
+<div class="container mt-3 mb-5">
+  <div class="row align-items-stretch rounded-3 border shadow-lg overflow-hidden">
+    
+    <!-- ข้อความ -->
+    <div class="col-lg-7 p-5 d-flex flex-column justify-content-center bg-light">
+      <h1 class="display-4 fw-bold lh-1 mb-3">ร้านยำปูม้าเจ็ดยอด</h1>
+      <p class="lead">สายแซ่บทุกท่านไม่ควรพลาดค่าา มีเมนูหลากหลายให้ลูกค้าได้แซ่บกันจ๊าา</p>
+      <p class="lead mb-4">เปิดทุกวัน เวลา 11.00 - 21.00 น.</p>
+      <div>
+        <a href="/menu" class="btn btn-danger btn-lg px-4 me-2 fw-bold">ดูเมนู</a>
+        <a href="/reservation" class="btn btn-outline-secondary btn-lg px-4">จองโต๊ะเลย</a>
+      </div>
+    </div>
+
+    <!-- รูป -->
+    <div class="col-lg-5 d-flex align-items-center justify-content-center bg-white">
+      <img src="{{ url_for('static', filename='top.png') }}"
+           class="img-fluid rounded shadow my-4"
+           style="max-height: 300px; object-fit: cover;"
+           alt="ยำปูม้า">
+    </div>
+
+  </div>
+</div>
+  
+<h2 class="text-center text-danger mb-4">เมนูแนะนำ</h2>
+<div class="row">
+  <div class="col-md-4">
+    <div class="card shadow-sm h-100">
+      <img src="{{ url_for('static', filename='3.jpg') }}" 
+           class="card-img-top" 
+           style="height: 300px; object-fit: cover;">
+      <div class="card-body text-center">
+        <h5 class="card-title">ยำปูม้า</h5>
+        <p class="text-danger fw-bold">135 บาท</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card shadow-sm h-100">
+      <img src="{{ url_for('static', filename='7.jpg') }}" 
+           class="card-img-top" 
+           style="height: 300px; object-fit: cover;">
+      <div class="card-body text-center">
+        <h5 class="card-title">ยำหอยแครง</h5>
+        <p class="text-danger fw-bold">85 บาท</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card shadow-sm h-100">
+      <img src="{{ url_for('static', filename='10.jpg') }}" 
+           class="card-img-top" 
+           style="height: 300px; object-fit: cover;">
+      <div class="card-body text-center">
+        <h5 class="card-title">ตำแซลม่อน</h5>
+        <p class="text-danger fw-bold">179 บาท</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

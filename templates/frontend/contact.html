@@ -1,0 +1,66 @@
+{% extends "frontend/layout.html" %}
+
+{% block content %}
+<h1 class="text-center text-danger mb-4">ติดต่อเรา</h1>
+
+<div class="row text-center mb-4">
+  <div class="col-12 col-md-4 mb-3">
+    <div class="card shadow-sm p-3 h-100 d-flex flex-column align-items-center justify-content-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#27f218" class="bi bi-telephone-fill" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/>
+      </svg>
+      เบอร์โทรศัพท์
+      <div class="d-flex gap-3">
+      <a href="tel:061-354-2362" class="text-decoration-none mb-1">061-354-2362</a>
+      <a href="tel:092-662-4233" class="text-decoration-none">092-662-4233</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 mb-3">
+    <div class="card shadow-sm p-3 h-100 d-flex align-items-center justify-content-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#1877F2" class="bi bi-facebook" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/>
+      </svg>
+      Facebook
+      
+        
+      <a href="https://www.facebook.com/profile.php?id=100067482865032" target="_blank">facebook.com/yumpooma</a>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 mb-3">
+    <div class="card shadow-sm p-3 h-100 d-flex align-items-center justify-content-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#f21818" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+        <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
+      </svg>
+      ที่อยู่
+      <a href="https://maps.app.goo.gl/kkK86Dt61RzmhS8Z8" 
+       target="_blank" class="text-decoration-none"> หน้ามหาวิทยาลัยพะเยา ติดกับร้านตัดผมรักษ์ บาร์เบอร์ </a>
+    </div>
+  </div>
+</div>
+
+<!-- รูปแผนที่และรูปร้าน -->
+<div class="row mb-4">
+  <div class="col-12 col-md-6 mb-3">
+    <div class="card shadow-sm h-100">
+      <img src="{{ url_for('static', filename='9.jpg') }}" class="card-img-top" alt="" style="width:100% ;height:400px; object-fit:cover;">
+      <div class="card-body text-center">
+        <h5 class="card-title">ร้านของเรา</h5>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6 mb-3">
+    <div class="card shadow-sm h-100">
+      <img src="../static/8.jpg" class="card-img-top" alt="" style="width:100% ;height:400px; object-fit:cover;">
+        <div class="card-body text-center">
+        <h5 class="card-title">แผนที่ร้าน</h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mt-4 text-center">
+  <h5>🕑 เวลาเปิด-ปิด</h5>
+  <p>ทุกวัน 11:00 - 22:00 น.</p>
+</div>
+{% endblock %}

@@ -1,0 +1,126 @@
+{% extends "frontend/layout.html" %}
+
+{% block content %}
+<div class="container my-5">
+  <h2 class="text-center text-danger mb-4">เมนูอาหารทั้งหมด</h2>
+
+  <!-- Search -->
+  <div class="row mb-4">
+    <div class="col-md-6 mx-auto">
+      <input type="text" id="searchInput" class="form-control" placeholder="ค้นหาเมนู...">
+    </div>
+  </div>
+
+  <!-- Tabs by category -->
+  <ul class="nav nav-pills justify-content-center mb-4" id="menuTabs">
+    <li class="nav-item"><a class="nav-link active" data-bs-toggle="pill" href="#all">ทั้งหมด</a></li>
+    <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#yum">ยำ</a></li>
+    <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#tum">ตำ</a></li>
+    <li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#other">เมนูอื่นๆ</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <!-- All menus -->
+    <div class="tab-pane fade show active" id="all">
+      <div class="row" id="menuList">
+        {% for item in menu_items %}
+        <div class="col-md-3 mb-4 menu-card" data-name="{{ item.name }}" data-category="{{ item.category }}">
+          <div class="card h-100 shadow-sm">
+      <img src="{{ url_for('static', filename=(item.image or 'no-image.jpg')) }}" 
+        class="card-img-top" 
+        style="height: 180px; object-fit: cover;">
+            <div class="card-body text-center">
+              <h6 class="card-title">{{ item['name'] }}</h6>
+              <p class="text-danger fw-bold">{{ item['price'] }} บาท</p>
+              <form method="POST" action="/cart/add/{{ item['id'] }}">
+                <button class="btn btn-success btn-sm mt-2">เพิ่มลงตะกร้า</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Filter by categories -->
+    <div class="tab-pane fade" id="yum">
+      <div class="row">
+        {% for item in menu_items if item.category == "ยำ" %}
+        <div class="col-md-3 mb-4">
+          <div class="card h-100 shadow-sm">
+      <img src="{{ url_for('static', filename=(item.image or 'no-image.jpg')) }}" 
+        class="card-img-top" 
+        style="height: 180px; object-fit: cover;">
+            <div class="card-body text-center">
+              <h6 class="card-title">{{ item['name'] }}</h6>
+              <p class="text-danger fw-bold">{{ item['price'] }} บาท</p>
+              <form method="POST" action="/cart/add/{{ item['id'] }}">
+                <button class="btn btn-success btn-sm mt-2">เพิ่มลงตะกร้า</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="tum">
+      <div class="row">
+        {% for item in menu_items if item.category == "ตำ" %}
+        <div class="col-md-3 mb-4">
+          <div class="card h-100 shadow-sm">
+      <img src="{{ url_for('static', filename=(item.image or 'no-image.jpg')) }}" 
+        class="card-img-top" 
+        style="height: 180px; object-fit: cover;">
+            <div class="card-body text-center">
+              <h6 class="card-title">{{ item['name'] }}</h6>
+              <p class="text-danger fw-bold">{{ item['price'] }} บาท</p>
+              <form method="POST" action="/cart/add/{{ item['id'] }}">
+                <button class="btn btn-success btn-sm mt-2">เพิ่มลงตะกร้า</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="other">
+      <div class="row">
+        {% for item in menu_items if item.category == "เมนูอื่นๆ" %}
+        <div class="col-md-3 mb-4">
+          <div class="card h-100 shadow-sm">
+      <img src="{{ url_for('static', filename=(item.image or 'no-image.jpg')) }}" 
+        class="card-img-top" 
+        style="height: 180px; object-fit: cover;">
+            <div class="card-body text-center">
+              <h6 class="card-title">{{ item['name'] }}</h6>
+              <p class="text-danger fw-bold">{{ item['price'] }} บาท</p>
+              <form method="POST" action="/cart/add/{{ item['id'] }}">
+                <button class="btn btn-success btn-sm mt-2">เพิ่มลงตะกร้า</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Search filter JS -->
+<script>
+  document.getElementById("searchInput").addEventListener("keyup", function() {
+    let value = this.value.toLowerCase();
+    let cards = document.querySelectorAll(".menu-card");
+    cards.forEach(card => {
+      let name = card.getAttribute("data-name").toLowerCase();
+      if (name.includes(value)) {
+        card.style.display = "";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  });
+</script>
+{% endblock %}

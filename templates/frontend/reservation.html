@@ -1,0 +1,72 @@
+{% extends "frontend/layout.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <h1 class="text-center text-danger mb-4">จองโต๊ะ</h1>
+
+  <div class="row align-items-center">
+    <!-- รูปทางซ้าย -->
+    <div class="col-md-6 d-flex justify-content-center mb-4 mb-md-0">
+      <img src="../static/seat.png" 
+           class="img-thumbnail-box-shadow" 
+           style="max-height: 500px; width: auto; max-width: 100%; object-fit: cover;" 
+           alt="Seat">
+    </div>
+
+    <!-- ฟอร์มทางขวา -->
+    <div class="col-md-6">
+      <form method="POST" action="/reservation" class="row g-3">
+        <div class="col-12">
+          <label for="name" class="form-label">ชื่อ-นามสกุล</label>
+          <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+
+        <div class="col-12">
+          <label for="phone" class="form-label">เบอร์โทรศัพท์</label>
+          <input type="tel" class="form-control" id="phone" name="phone" required>
+        </div>
+
+        <div class="col-md-6">
+          <label for="date" class="form-label">วันที่</label>
+          <input type="date" class="form-control" id="date" name="date" required>
+        </div>
+
+        <div class="col-md-6">
+          <label for="time" class="form-label">เวลา</label>
+          <select class="form-select" id="time" name="time" required>
+            <option value="" disabled selected>เลือกเวลา</option>
+            {% for h in range(11, 22) %}
+              {% for m in [0, 30] %}
+                {% set hour = '%02d' % h %}
+                {% set minute = '%02d' % m %}
+                <option value="{{ hour }}:{{ minute }}">{{ hour }}:{{ minute }}</option>
+              {% endfor %}
+            {% endfor %}
+            <option value="22:00">22:00</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="table_no" class="form-label">หมายเลขโต๊ะ</label>
+          <select class="form-select" id="table_no" name="table_no" required>
+            <option value="" disabled selected>เลือกเลขโต๊ะ</option>
+            {% for i in range(1, 11) %}
+              <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="people" class="form-label">จำนวนคน</label>
+          <input type="number" class="form-control" id="people" name="people" min="1" required>
+        </div>
+
+        <div class="col-12 text-center mt-3">
+          <button type="submit" class="btn btn-danger px-5">จองโต๊ะ</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
