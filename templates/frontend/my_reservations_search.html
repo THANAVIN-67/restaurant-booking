@@ -1,0 +1,32 @@
+{% extends "frontend/layout.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <h1 class="text-center text-danger mb-4">ค้นหาการจองของฉัน</h1>
+
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <form method="POST" action="/my_reservations" class="g-3">
+            <div class="mb-3">
+              <label for="phone" class="form-label">เบอร์โทรศัพท์</label>
+              <p class="text-muted small">กรุณากรอกเบอร์โทรศัพท์ที่ใช้จองโต๊ะ</p>
+              <input type="tel" class="form-control form-control-lg" id="phone" name="phone" placeholder="เช่น 0812345678" required>
+            </div>
+
+            <div class="text-center">
+              <button type="submit" class="btn btn-danger btn-lg px-5">ค้นหาการจองของฉัน</button>
+            </div>
+          </form>
+
+          <hr class="my-4">
+          <p class="text-muted text-center small mb-0">
+            ต้องการจองโต๊ะใหม่? <a href="{{ url_for('reservation') }}" class="text-danger">จองที่นี่</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
