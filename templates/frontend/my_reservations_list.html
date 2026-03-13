@@ -1,0 +1,95 @@
+{% extends "frontend/layout.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <h1 class="text-center text-danger mb-4">การจองของฉัน</h1>
+
+  <div class="row mb-4">
+    <div class="col-md-12">
+      <p class="text-muted">เบอร์โทรศัพท์: <strong>{{ phone }}</strong></p>
+      <a href="{{ url_for('my_reservations') }}" class="btn btn-outline-secondary btn-sm">ค้นหาอีกครั้ง</a>
+    </div>
+  </div>
+
+  {% if reservations %}
+    <div class="table-responsive">
+      <table class="table table-striped table-hover">
+        <thead class="table-danger">
+          <tr>
+            <th>ชื่อผู้จอง</th>
+            <th>วันที่</th>
+            <th>เวลา</th>
+            <th>เลขโต๊ะ</th>
+            <th>จำนวนคน</th>
+            <th>การกระทำ</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for reservation in reservations %}
+            <tr>
+              <td>{{ reservation.name }}</td>
+              <td>
+                {% set date_obj = reservation.date %}
+                {% set parts = date_obj.split('-') %}
+                {% set thai_year = parts[0]|int + 543 %}
+                {{ parts[2] }}/{{ parts[1] }}/{{ thai_year }}
+              </td>
+              <td>{{ reservation.time }}</td>
+              <td>{{ reservation.table_no }}</td>
+              <td>{{ reservation.people }} คน</td>
+              <td>
+                <a href="{{ url_for('edit_reservation', id=reservation.id) }}" class="btn btn-warning btn-sm">แก้ไข</a>
+                <button type="button" class="btn btn-danger btn-sm cancel-reservation-btn" data-href="{{ url_for('cancel_reservation', id=reservation.id) }}">ยกเลิก</button>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-4">
+      <p class="text-muted">ต้องการจองเพิ่มเติม? <a href="{{ url_for('reservation') }}" class="text-danger">จองที่นี่</a></p>
+    </div>
+  {% else %}
+    <div class="alert alert-info text-center" role="alert">
+      <h5>ไม่พบการจองสำหรับเบอร์โทรศัพท์นี้</h5>
+      <p class="mb-0">ต้องการจองโต๊ะ? <a href="{{ url_for('reservation') }}" class="text-danger">จองที่นี่</a></p>
+    </div>
+  {% endif %}
+</div>
+
+<!-- Confirm Cancel Modal -->
+<div class="modal fade" id="cancelConfirmationModal" tabindex="-1" aria-labelledby="cancelConfirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cancelConfirmationModalLabel">ยืนยันการยกเลิกการจอง</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        คุณต้องการยกเลิกการจองใช่หรือไม่?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+        <a href="#" id="cancelConfirmBtn" class="btn btn-danger">ยืนยัน</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var cancelModal = new bootstrap.Modal(document.getElementById('cancelConfirmationModal'));
+    var cancelConfirmBtn = document.getElementById('cancelConfirmBtn');
+
+    document.querySelectorAll('.cancel-reservation-btn').forEach(function(btn) {
+      btn.addEventListener('click', function(event) {
+        event.preventDefault();
+        cancelConfirmBtn.setAttribute('href', btn.getAttribute('data-href'));
+        cancelModal.show();
+      });
+    });
+  });
+</script>
+
+{% endblock %}

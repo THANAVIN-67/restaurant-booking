@@ -1,0 +1,70 @@
+{% extends "frontend/layout.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <h1 class="text-center text-danger mb-4">แก้ไขการจอง</h1>
+
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <div class="mb-4 p-3 bg-light rounded">
+            <h6 class="text-muted mb-3">ข้อมูลการจองของคุณ</h6>
+            <div class="row mb-2">
+              <div class="col-md-6">
+                <p><strong>ชื่อผู้จอง:</strong> {{ reservation.name }}</p>
+              </div>
+              <div class="col-md-6">
+                <p><strong>เบอร์โทรศัพท์:</strong> {{ reservation.phone }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <p><strong>เลขโต๊ะ:</strong> {{ reservation.table_no }}</p>
+              </div>
+            </div>
+          </div>
+
+          <form method="POST" class="row g-3">
+            <div class="col-md-6">
+              <label for="date" class="form-label">วันที่</label>
+              <input type="date" class="form-control" id="date" name="date" value="{{ reservation.date }}" required>
+            </div>
+
+            <div class="col-md-6">
+              <label for="time" class="form-label">เวลา</label>
+              <select class="form-select" id="time" name="time" required>
+                <option value="" disabled>เลือกเวลา</option>
+                {% for h in range(11, 22) %}
+                  {% for m in [0, 30] %}
+                    {% set hour = '%02d' % h %}
+                    {% set minute = '%02d' % m %}
+                    {% set time_value = hour + ':' + minute %}
+                    <option value="{{ time_value }}" {% if time_value == reservation.time %}selected{% endif %}>{{ hour }}:{{ minute }}</option>
+                  {% endfor %}
+                {% endfor %}
+                <option value="22:00" {% if reservation.time == '22:00' %}selected{% endif %}>22:00</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="people" class="form-label">จำนวนคน</label>
+              <input type="number" class="form-control" id="people" name="people" value="{{ reservation.people }}" min="1" required>
+            </div>
+
+            <div class="col-12 text-center mt-4">
+              <button type="submit" class="btn btn-success btn-lg px-5">บันทึกการแก้ไข</button>
+              <a href="{{ url_for('view_my_reservations', phone=reservation.phone) }}" class="btn btn-secondary btn-lg px-5 ms-2">ยกเลิก</a>
+            </div>
+          </form>
+
+          <hr class="my-4">
+          <div class="text-center">
+            <a href="{{ url_for('cancel_reservation', id=reservation.id) }}" class="btn btn-danger btn-sm" onclick="return confirm('ยืนยันการยกเลิกการจองนี้?');">ยกเลิกการจองทั้งหมด</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
